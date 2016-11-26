@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="UTF-8">
+        <title>Material Dashboard</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Fonts set application style sheet: Roboto fonts set -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+
+        <!-- Icons set application style sheet: Material icons set -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- Vendor style sheets -->
+        <link type="text/css" rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+        <link type="text/css" rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.min.css"/>
+
+        <!-- Application style sheets -->
+        <link type="text/css" rel="stylesheet" href="styles/index.css">
+    </head>
+    <body layout="column" ng-controller="sampleController" ng-cloak>
+        <!--- HEADER BAND-->
+        <div id="headerbar" layout="row">
+            <!--- Logo band-->
+            <md-content id="logo">
+                <a href="http://www.thingtrack.com" target="_blank">
+                    <img src="assets/images/logo.jpg" alt="Thingtrack">
+                </a>
+            </md-content>
+            <!--- End Logo band-->
+
+            <!--- Toolbar band-->
+            <md-toolbar flex>
+                <div class="md-toolbar-tools">
+                    <span flex></span>
+
+                    <md-menu-bar>
+                        <md-tooltip md-direction="botton">User Profile</md-tooltip>
+                        <md-menu md-position-mode="left bottom">
+                            <md-button ng-click="$mdOpenMenu()" aria-label="User settings">
+                                <div layout="row" layout-align="space-between center">
+                                    <img md-menu-align-target class="avatar" src="assets/images/profile.jpg">
+                                    <span>{{customerName}}</span>
+                                    <md-icon>keyboard_arrow_down</md-icon>
+                                </div>
+                            </md-button>
+
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-icon>person</md-icon>
+                                    <md-button ng-click="profile()">My Profile</md-button>
+                                </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
+                                <md-menu-item>
+                                    <md-icon>exit_to_app</md-icon>
+                                    <md-button ng-click="logout()">Logout</md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-bar>
+
+                    <div class="toolbar-separator"></div>
+
+                    <md-button class="md-icon-button" ng-click="alarm()" aria-label="alarm view">
+                        <md-tooltip md-direction="botton">Alarm List</md-tooltip>
+                        <md-icon>notifications</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="help()" aria-label="Help view">
+                        <md-tooltip md-direction="botton">Help Application</md-tooltip>
+                        <md-icon>help</md-icon>
+                    </md-button>
+
+                    <div class="toolbar-separator"></div>
+
+                    <md-button class="md-icon-button" ng-click="toggleRight()" ng-hide="isOpenRight()" aria-label="Chat view">
+                        <md-tooltip md-direction="botton">Right Side Bar</md-tooltip>
+                        <md-icon>reorder</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <!--- End Toolbar band-->
+        </div>
+        <!--- END HEADER BAND-->
+
+        <div layout="row" flex>
+            <!--- SIDEBAR BAND-->
+            <div id="sidebar" layout="column" layout-padding>
+                <!--- Header Sidebar band-->
+                <!--<div id="sidebar-header">
+                            Header Sidebar
+                        </div>-->
+                <!--- End Header Sidebar band-->
+
+                <!--- Menu Sidebar band-->
+                <md-content id="sidebar-content" flex>
+                    <md-list layout="column" layout-align="center center" flex>
+                        <md-subheader class="md-no-sticky">Masters Options</md-subheader>
+                        <md-list-item>
+                            <md-button class="md-grid-item-content" ng-click="menuItemClick('USER')">
+                                <md-tooltip md-direction="right">User list</md-tooltip>
+                                <md-icon>people</md-icon>
+                                <div class="md-grid-text">Users</div>
+                            </md-button>
+                        </md-list-item>
+                        <!--<md-list-item>
+                                    <md-tooltip md-direction="right">User list</md-tooltip>
+                                      <md-icon>people</md-icon>
+                                      <p>Users</p>
+                                </md-list-item>-->
+                        <md-list-item>
+                            <md-button class="md-grid-item-content" ng-click="menuItemClick('PRODUCT')">
+                                <md-tooltip md-direction="right">Product list</md-tooltip>
+                                <md-icon>invert_colors</md-icon>
+                                <div class="md-grid-text">Products</div>
+                            </md-button>
+                        </md-list-item>
+                        <!--<md-list-item>
+                                        <md-tooltip md-direction="right">Product list</md-tooltip>
+                                          <md-icon>invert_colors</md-icon>
+                                          <p>Products</p>
+                                    </md-list-item>-->
+                        <md-list-item>
+                            <md-button class="md-grid-item-content" ng-click="menuItemClick('INFRAESTRUCTURE')">
+                                <md-tooltip md-direction="right">Manage Infraestructure</md-tooltip>
+                                <md-icon>build</md-icon>
+                                <div class="md-grid-text">Infraestructure</div>
+                            </md-button>
+                        </md-list-item>
+                        <!--<md-list-item ng-click="null">
+                                      <md-tooltip md-direction="right">Manage Infraestructure</md-tooltip>
+                                        <md-icon>build</md-icon>
+                                        <p>Infraestructure</p>
+                                  </md-list-item>-->
+                        <md-list-item>
+                            <md-button class="md-grid-item-content" ng-click="menuItemClick('CANBUS')">
+                                <md-tooltip md-direction="right">Manage CAN bus</md-tooltip>
+                                <md-icon>settings_input_svideo</md-icon>
+                                <div class="md-grid-text">CAN bus</div>
+                            </md-button>
+                        </md-list-item>
+                        <!--<md-list-item>
+                                      <md-tooltip md-direction="right">Manage CAN bus</md-tooltip>
+                                        <md-icon>settings_input_svideo</md-icon>
+                                        <p>CAN bus</p>
+                                  </md-list-item>-->
+                        <md-divider></md-divider>
+                        <md-subheader class="md-no-sticky">Management Options</md-subheader>
+                        <div>
+                            <md-list-item>
+                                <md-button class="md-grid-item-content" ng-click="menuItemClick('VISUALIZE')">
+                                    <md-tooltip md-direction="right">Visualize Infraestructure</md-tooltip>
+                                    <md-icon>desktop_mac</md-icon>
+                                    <div class="md-grid-text">Visualize</div>
+                                </md-button>
+                            </md-list-item>
+                            <!--<md-list-item>
+                                          <md-tooltip md-direction="right">Visualize Infraestructure</md-tooltip>
+                                            <md-icon>desktop_mac</md-icon>
+                                            <p>Visualize</p>
+                                      </md-list-item>-->
+                            <md-list-item>
+                                <md-button class="md-grid-item-content" ng-click="menuItemClick('ORDERS')">
+                                    <md-tooltip md-direction="right">Manage Orders</md-tooltip>
+                                    <md-icon>flash_on</md-icon>
+                                    <div class="md-grid-text">Orders</div>
+                                </md-button>
+                            </md-list-item>
+                            <!--<md-list-item>
+                                          <md-tooltip md-direction="right">Manage Orders</md-tooltip>
+                                            <md-icon>flash_on</md-icon>
+                                            <p>Orders</p>
+                                      </md-list-item>-->
+                        </div>
+                    </md-list>
+                </md-content>
+                <!--- End Menu Sidebar band-->
+
+                <!--- Footer Sidebar band-->
+                <!--<div id="sidebar-header">
+                            Footer Sidebar
+                        </div>-->
+                <!--- End Footer Sidebar band-->
+            </div>
+            <!--- END SIDEBAR BAND-->
+
+            <!--- WORKBENCH BAND-->
+            <div id="containerbar" layout="column" layout-padding flex>
+                <!--- workbench band-->
+                <!--<md-content id="workbench" ui-view="content" flex>
+                </md-content>-->
+                <div layout="row" id="workbench" ui-view="content" flex>
+                </div>
+                <!--- End main container band-->
+
+                <!--- footerbar container band-->
+                <div id="footerbar">
+                    <md-toolbar>
+                        <div class="md-toolbar-tools">
+                            <p class="md-body-1">Thingtrack Copyright®</p>
+                            <span flex></span>
+                            <p class="md-caption">{{ clock  | date: 'dd.MM.y hh:mm:ss a'}}</p>
+                        </div>
+                    </md-toolbar>
+                </div>
+                <!--- End toobar container band-->
+            </div>
+            <!--- END WORKBENCH BAND-->
+
+            <!-- QUICK PANEL BAND-->
+            <md-sidenav class="md-sidenav-right md-whiteframe-4dp quick-panel" md-component-id="right" layout-padding>
+                <md-toolbar class="md-theme-light">
+                    <h1 class="md-toolbar-tools">Sidenav Right</h1>
+                </md-toolbar>
+                <md-content layout-padding flex>
+                    <md-button ng-click="close()" class="md-primary">
+                        Close Sidenav Right
+                    </md-button>
+                </md-content>
+            </md-sidenav>
+            <!-- END QUICK PANEL BAND-->
+        </div>
+
+        <!--- FOOTER BAND-->
+        <!--<div id="footerbar" layout="row">
+                Footer
+            </div>-->
+        <!--- END FOOTER BAND-->
+
+        <!-- Vendor javascript packages -->
+        <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-aria/angular-aria.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-messages/angular-messages.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-material/angular-material.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>
+
+        <!-- Application services packages  -->
+
+        <!-- Application javascript packages  -->
+        <script src="app/js/index.js"></script>
+        <script src="app/modules/user/user-controller.js"></script>
+        <script src="app/modules/product/product-controller.js"></script>
+        <script src="app/modules/product/form/product-form.controller.js"></script>
+        <script src="app/modules/infraestructure/infraestructure-controller.js"></script>
+        <script src="app/modules/canbus/canbus-controller.js"></script>
+        <script src="app/modules/visualize/visualize-controller.js"></script>
+        <script src="app/modules/order/order-controller.js"></script>
+    </body>
+</html>

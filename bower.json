@@ -1,0 +1,23 @@
+{
+  "name": "material-dashboard",
+  "description": "Angular Material Basic Dashboard",
+  "main": "server/server.js",
+  "authors": [
+    "Miguel Salinas Gancedo"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.1.1",
+    "angular-material-data-table": "^0.10.9",
+    "angular-ui-router": "~0.3.1",
+    "angular-resource": "~1.5.8"
+  }
+}
